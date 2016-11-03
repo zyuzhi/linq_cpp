@@ -10,7 +10,7 @@ My cpp template toy of linq(c#)
 
 ## Doc
 
-1. From
+1. From  
    All Linq expression starts with `Linq::From`  
    Supports `array` and stl containers
 1. Where
