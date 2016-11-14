@@ -3,17 +3,23 @@ Yet Another Cpp Linq Implementation
 My cpp template toy of linq(c#)
 
 ## Support Function
-* **Where**
-* **Select**
-* **All**
-* **Any**
+* **where**
+* **select**
+* **all**
+* **any**
+* **count**
+* **sum**
+* **average**
 
 ## Doc
 
-1. From  
+1. from  
    All Linq expression starts with `Linq::From`  
    Supports `array` and stl containers
-1. Where
-1. Select
-1. All
-1. Any
+1. where
+1. select
+1. all
+1. any
+1. count
+1. sum
+1. average
