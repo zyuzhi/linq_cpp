@@ -133,12 +133,12 @@ public:
 		return count;
 	}
 
-	size_t count()
+	size_t count() const
 	{
 		return data.size();
 	}
 
-	ElementType sum()
+	ElementType sum() const
 	{
 		ElementType sum = 0;
 		for (auto it = data.begin(); it != data.end(); ++it)
@@ -149,7 +149,7 @@ public:
 	}
 
 	template<typename Function>
-	ElementType sum(const Function& func)
+	ElementType sum(const Function& func) const
 	{
 		ElementType sum;
 		for (auto it = data.begin(); it != data.end(); ++it)
@@ -159,7 +159,7 @@ public:
 		return sum;
 	}
 
-	ElementType average()
+	ElementType average() const
 	{
 		auto size = count();
 		if (size == 0)
@@ -170,7 +170,7 @@ public:
 	}
 
 	template<typename Function>
-	ElementType average(const Function& func)
+	ElementType average(const Function& func) const
 	{
 		auto size = count();
 		if (size == 0)
