@@ -15,24 +15,24 @@ struct function_traits<ReturnType(ClassType::*)(Arg1) const>
 };
 
 template <typename T, template<typename E, typename Allocator=std::allocator<E> > class _Container=std::list>
-class Range
+class range
 {
 public:
 	typedef T ElementType;
 	typedef _Container<ElementType> SeqType;
-	typedef Range<ElementType> SelfType;
-	typedef Range<ElementType>& SelfReferenceType;
+	typedef range<ElementType> SelfType;
+	typedef range<ElementType>& SelfReferenceType;
 private:
 	SeqType data;
 public:
 	template<typename Container>
-	explicit Range(Container &v)
+	explicit range(Container &v)
 		: data(std::begin(v), std::end(v))
 	{
 	}
 
 	template<typename Iterator>
-	Range(Iterator itStart, Iterator itEnd)
+	range(Iterator itStart, Iterator itEnd)
 		: data(itStart, itEnd)
 	{
 	}
@@ -58,7 +58,7 @@ public:
 	}
 	
 	template<typename Function>
-	SelfType Where(const Function& func) const
+	SelfType where(const Function& func) const
 	{
 		SeqType res;
 		for (auto it = data.begin(); it != data.end(); ++it)
@@ -72,7 +72,7 @@ public:
 	}
 
 	template<typename Function>
-	Range<typename function_traits<Function>::result_type> Select(const Function& func) const
+	range<typename function_traits<Function>::result_type> select(const Function& func) const
 	{
 		typedef typename function_traits<Function>::result_type result_type;
 		_Container<result_type> res;
@@ -80,11 +80,11 @@ public:
 		{
 			res.push_back(func(*it));
 		}
-		return Range<result_type>(res);
+		return range<result_type>(res);
 	}
 
 	template<typename Function>
-	bool All(const Function& func) const
+	bool all(const Function& func) const
 	{
 		for (auto it = data.begin(); it != data.end(); ++it)
 		{
@@ -97,7 +97,7 @@ public:
 	}
 
 	template<typename Function>
-	bool Any(const Function& func) const
+	bool any(const Function& func) const
 	{
 		for (auto it = data.begin(); it != data.end(); ++it)
 		{
@@ -110,7 +110,7 @@ public:
 	}
 
 	template<typename Function>
-	size_t Count(const Function& func) const
+	size_t count(const Function& func) const
 	{
 		size_t count = 0;
 		for (auto it = data.begin(); it != data.end(); ++it)
@@ -123,12 +123,12 @@ public:
 		return count;
 	}
 
-	size_t Count()
+	size_t count()
 	{
 		return data.size();
 	}
 
-	ElementType Sum()
+	ElementType sum()
 	{
 		ElementType sum = 0;
 		for (auto it = data.begin(); it != data.end(); ++it)
@@ -139,7 +139,7 @@ public:
 	}
 
 	template<typename Function>
-	ElementType Sum(const Function& func)
+	ElementType sum(const Function& func)
 	{
 		ElementType sum;
 		for (auto it = data.begin(); it != data.end(); ++it)
@@ -149,49 +149,49 @@ public:
 		return sum;
 	}
 
-	ElementType Average()
+	ElementType average()
 	{
-		auto size = Count();
+		auto size = count();
 		if (size == 0)
 		{
 			return 0;
 		}
-		return Sum() / size;
+		return sum() / size;
 	}
 
 	template<typename Function>
 	ElementType Average(const Function& func)
 	{
-		auto size = Count();
+		auto size = count();
 		if (size == 0)
 		{
 			return 0;
 		}
-		return Sum(func) / size;
+		return sum(func) / size;
 	}
 
-	SeqType ToList()
+	SeqType to_list()
 	{
 		return data;
 	}
 };
 
 template<typename Container>
-Range<typename Container::value_type> From(const Container& v)
+range<typename Container::value_type> from(const Container& v)
 {
-	return Range<typename Container::value_type>(v);
+	return range<typename Container::value_type>(v);
 }
 
 template<typename Iterator>
-Range<typename std::iterator_traits<Iterator>::value_type> From(const Iterator& itStart, const Iterator& itEnd)
+range<typename std::iterator_traits<Iterator>::value_type> from(const Iterator& itStart, const Iterator& itEnd)
 {
-	typedef Range<typename std::iterator_traits<Iterator>::value_type> RetType;
+	typedef range<typename std::iterator_traits<Iterator>::value_type> RetType;
 	return RetType(itStart, itEnd);
 }
 
 template<typename Type, size_t Size>
-Range<Type> From(Type (&arr)[Size])
+range<Type> from(Type (&arr)[Size])
 {
-	return Range<Type>(arr, arr + Size);
+	return range<Type>(arr, arr + Size);
 }
 }
