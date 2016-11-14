@@ -1,0 +1,9 @@
+ipch
+debug
+release
+*~
+linq_cpp.opensdf
+linq_cpp.sdf
+linq_cpp.suo
+linq_cpp.sln
+linq_cpp.vcxproj.user
