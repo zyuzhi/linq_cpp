@@ -15,24 +15,24 @@ struct function_traits<ReturnType(ClassType::*)(Arg1) const>
 };
 
 template <typename T, template<typename E, typename Allocator=std::allocator<E> > class _Container=std::list>
-class LinqRange
+class Range
 {
 public:
 	typedef T ElementType;
 	typedef _Container<ElementType> SeqType;
-	typedef LinqRange<ElementType> SelfType;
-	typedef LinqRange<ElementType>& SelfReferenceType;
+	typedef Range<ElementType> SelfType;
+	typedef Range<ElementType>& SelfReferenceType;
 private:
 	SeqType data;
 public:
 	template<typename Container>
-	explicit LinqRange(Container &v)
+	explicit Range(Container &v)
 		: data(std::begin(v), std::end(v))
 	{
 	}
 
 	template<typename Iterator>
-	LinqRange(Iterator itStart, Iterator itEnd)
+	Range(Iterator itStart, Iterator itEnd)
 		: data(itStart, itEnd)
 	{
 	}
@@ -58,7 +58,7 @@ public:
 	}
 	
 	template<typename Function>
-	SelfType Where(Function func)
+	SelfType Where(const Function& func) const
 	{
 		SeqType res;
 		for (auto it = data.begin(); it != data.end(); ++it)
@@ -72,7 +72,7 @@ public:
 	}
 
 	template<typename Function>
-	LinqRange<typename function_traits<Function>::result_type> Select(Function func)
+	Range<typename function_traits<Function>::result_type> Select(const Function& func) const
 	{
 		typedef typename function_traits<Function>::result_type result_type;
 		_Container<result_type> res;
@@ -80,11 +80,11 @@ public:
 		{
 			res.push_back(func(*it));
 		}
-		return LinqRange<result_type>(res);
+		return Range<result_type>(res);
 	}
 
 	template<typename Function>
-	bool All(Function func)
+	bool All(const Function& func) const
 	{
 		for (auto it = data.begin(); it != data.end(); ++it)
 		{
@@ -97,7 +97,7 @@ public:
 	}
 
 	template<typename Function>
-	bool Any(Function func)
+	bool Any(const Function& func) const
 	{
 		for (auto it = data.begin(); it != data.end(); ++it)
 		{
@@ -109,26 +109,89 @@ public:
 		return false;
 	}
 
+	template<typename Function>
+	size_t Count(const Function& func) const
+	{
+		size_t count = 0;
+		for (auto it = data.begin(); it != data.end(); ++it)
+		{
+			if (func(*it))
+			{
+				count++;
+			}
+		}
+		return count;
+	}
+
+	size_t Count()
+	{
+		return data.size();
+	}
+
+	ElementType Sum()
+	{
+		ElementType sum = 0;
+		for (auto it = data.begin(); it != data.end(); ++it)
+		{
+			sum += *it;
+		}
+		return sum;
+	}
+
+	template<typename Function>
+	ElementType Sum(const Function& func)
+	{
+		ElementType sum;
+		for (auto it = data.begin(); it != data.end(); ++it)
+		{
+			sum = func(sum, *it);
+		}
+		return sum;
+	}
+
+	ElementType Average()
+	{
+		auto size = Count();
+		if (size == 0)
+		{
+			return 0;
+		}
+		return Sum() / size;
+	}
+
+	template<typename Function>
+	ElementType Average(const Function& func)
+	{
+		auto size = Count();
+		if (size == 0)
+		{
+			return 0;
+		}
+		return Sum(func) / size;
+	}
+
 	SeqType ToList()
 	{
 		return data;
 	}
 };
 
-class Linq
+template<typename Container>
+Range<typename Container::value_type> From(const Container& v)
 {
-public:
-	template<typename Container>
-	static LinqRange<typename Container::value_type> From(Container& v)
-	{
-		return LinqRange<typename Container::value_type>(v);
-	}
+	return Range<typename Container::value_type>(v);
+}
 
-	template<typename Iterator>
-	static LinqRange<typename std::iterator_traits<Iterator>::value_type> From(Iterator itStart, Iterator itEnd)
-	{
-		typedef LinqRange<typename std::iterator_traits<Iterator>::value_type> RetType;
-		return RetType(itStart, itEnd);
-	}
-};
+template<typename Iterator>
+Range<typename std::iterator_traits<Iterator>::value_type> From(const Iterator& itStart, const Iterator& itEnd)
+{
+	typedef Range<typename std::iterator_traits<Iterator>::value_type> RetType;
+	return RetType(itStart, itEnd);
+}
+
+template<typename Type, size_t Size>
+Range<Type> From(Type (&arr)[Size])
+{
+	return Range<Type>(arr, arr + Size);
+}
 }
