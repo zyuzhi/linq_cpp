@@ -174,6 +174,15 @@ public:
 	{
 		return data;
 	}
+
+	bool contains(const ElementType& t)
+	{
+		for (auto it = begin(); it != end(); ++it)
+		{
+			if (t == *it) return true;
+		}
+		return false;
+	}
 };
 
 template<typename Container>

@@ -10,6 +10,7 @@ My cpp template toy of linq(c#)
 * **count**
 * **sum**
 * **average**
+* **contains**
 
 ## Doc
 
@@ -23,3 +24,4 @@ My cpp template toy of linq(c#)
 1. count
 1. sum
 1. average
+1. contains

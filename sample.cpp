@@ -46,6 +46,7 @@ void test2()
 	std::cout << "count > 8 " << res.count([](int i){return i > 8;}) << std::endl;
 	std::cout << "count " << res.count() << std::endl;
 	std::cout << "sum " << res.sum() << std::endl;
+	std::cout << "contains " << res.contains(0) << std::endl;
 }
 
 int main()
