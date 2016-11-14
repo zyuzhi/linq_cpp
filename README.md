@@ -11,6 +11,9 @@ My cpp template toy of linq(c#)
 * **sum**
 * **average**
 * **contains**
+* **empty**
+* **first**
+* **first_or_default**
 
 ## Doc
 
@@ -25,3 +28,6 @@ My cpp template toy of linq(c#)
 1. sum
 1. average
 1. contains
+1. empty
+1. first
+1. first_or_default

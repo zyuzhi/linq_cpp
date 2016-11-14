@@ -3,6 +3,16 @@
 
 namespace zlinq
 {
+
+class zlinq_exception
+{
+public:
+	std::string message;
+	zlinq_exception(const std::string& message)
+		: message(message)
+	{
+	}
+};
 template <typename T>
 struct function_traits
     : public function_traits<decltype(&T::operator())>
@@ -175,13 +185,29 @@ public:
 		return data;
 	}
 
-	bool contains(const ElementType& t)
+	bool contains(const ElementType& t) const
 	{
 		for (auto it = begin(); it != end(); ++it)
 		{
 			if (t == *it) return true;
 		}
 		return false;
+	}
+
+	bool empty() const
+	{
+		return begin() == end();
+	}
+
+	ElementType first() const
+	{
+		if (empty()) throw zlinq_exception("Failed to get a value from an empty collection.");
+		return *begin();
+	}
+
+	ElementType first_or_default(const ElementType& value) const
+	{
+		return empty() ? value : *begin();
 	}
 };
 
