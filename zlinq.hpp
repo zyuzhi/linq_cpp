@@ -209,6 +209,25 @@ public:
 	{
 		return empty() ? value : *begin();
 	}
+
+	ElementType last() const
+	{
+		if (empty()) throw zlinq_exception("Failed to get a value from an empty collection.");
+		auto it = end();
+		--it;
+		return *it;
+	}
+
+	ElementType last_or_default(const ElementType& value) const
+	{
+		if (empty())
+		{
+			return value;
+		}
+		auto it = end();
+		--it;
+		return *it;
+	}
 };
 
 template<typename Container>

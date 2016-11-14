@@ -14,6 +14,8 @@ My cpp template toy of linq(c#)
 * **empty**
 * **first**
 * **first_or_default**
+* **last**
+* **last_or_default**
 
 ## Doc
 
@@ -31,3 +33,5 @@ My cpp template toy of linq(c#)
 1. empty
 1. first
 1. first_or_default
+1. last
+1. last_or_default
