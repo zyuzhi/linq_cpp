@@ -160,7 +160,7 @@ public:
 	}
 
 	template<typename Function>
-	ElementType Average(const Function& func)
+	ElementType average(const Function& func)
 	{
 		auto size = count();
 		if (size == 0)
