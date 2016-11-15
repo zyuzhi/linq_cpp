@@ -1,5 +1,6 @@
 #pragma once
 #include <list>
+#include <set>
 
 namespace zlinq
 {
@@ -227,6 +228,22 @@ public:
 		auto it = end();
 		--it;
 		return *it;
+	}
+
+	range<ElementType> distinct() const
+	{
+		std::set<ElementType> set;
+		std::list<ElementType> list;
+
+		for (auto it = begin(); it != end(); ++it)
+		{
+			if (set.find(*it) == set.end())
+			{
+				set.insert(*it);
+				list.push_back(*it);
+			}
+		}
+		return range(list);
 	}
 };
 

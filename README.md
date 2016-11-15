@@ -16,11 +16,12 @@ My cpp template toy of linq(c#)
 * **first_or_default**
 * **last**
 * **last_or_default**
+* **distinct**
 
 ## Doc
 
 1. from  
-   All Linq expression starts with `Linq::From`  
+   All Linq expression starts with `zlinq::from`  
    Supports `array` and stl containers
 1. where
 1. select
@@ -35,3 +36,4 @@ My cpp template toy of linq(c#)
 1. first_or_default
 1. last
 1. last_or_default
+1. distinct

@@ -35,7 +35,7 @@ void test1()
 
 void test2()
 {
-	int a[10] = {10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
+	int a[] = {10, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
 	auto res = from(a).where([](int i){return i > 5;});
 	for (auto it = res.begin(); it != res.end(); ++it)
 	{
@@ -47,6 +47,15 @@ void test2()
 	std::cout << "count " << res.count() << std::endl;
 	std::cout << "sum " << res.sum() << std::endl;
 	std::cout << "contains " << res.contains(0) << std::endl;
+	std::cout << "first " << res.first() << std::endl;
+	std::cout << "last " << res.last() << std::endl;
+	auto distinct_res = res.distinct();
+	std::cout << "last" << std::endl;
+	for (auto it = distinct_res.begin(); it != distinct_res.end(); ++it)
+	{
+		std::cout << *it << " ";
+	}
+	std::cout << std::endl;
 }
 
 int main()
