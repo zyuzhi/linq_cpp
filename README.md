@@ -17,6 +17,8 @@ My cpp template toy of linq(c#)
 * **last**
 * **last_or_default**
 * **distinct**
+* **except_with**
+* **intersect_with**
 
 ## Doc
 
@@ -37,3 +39,5 @@ My cpp template toy of linq(c#)
 1. last
 1. last_or_default
 1. distinct
+1. except_with
+1. intersect_with

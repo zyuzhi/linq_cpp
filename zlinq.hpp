@@ -36,6 +36,9 @@ public:
 private:
 	SeqType data;
 public:
+	range()
+	{}
+
 	template<typename Container>
 	explicit range(Container &v)
 		: data(std::begin(v), std::end(v))
@@ -240,6 +243,34 @@ public:
 			if (set.find(*it) == set.end())
 			{
 				set.insert(*it);
+				list.push_back(*it);
+			}
+		}
+		return range(list);
+	}
+
+	range<ElementType> except_with(const range<ElementType>& val) const
+	{
+		std::set<ElementType> set(val.begin(), val.end());
+		std::list<ElementType> list;
+		for (auto it = begin(); it != end(); ++it)
+		{
+			if (set.find(*it) == set.end())
+			{
+				list.push_back(*it);
+			}
+		}
+		return range(list);
+	}
+
+	range<ElementType> intersect_with(const range<ElementType>& val) const
+	{
+		std::set<ElementType> set(val.begin(), val.end());
+		std::list<ElementType> list;
+		for (auto it = begin(); it != end(); ++it)
+		{
+			if (set.find(*it) != set.end())
+			{
 				list.push_back(*it);
 			}
 		}

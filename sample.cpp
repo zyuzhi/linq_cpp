@@ -58,9 +58,30 @@ void test2()
 	std::cout << std::endl;
 }
 
+void test3()
+{
+	int a[] = {10, 9, 8, 7, 6};
+	int b[] = {10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
+	auto except_res = from(b).except_with(from(a));
+	std::cout << "except_with" << std::endl;
+	for (auto it = except_res.begin(); it != except_res.end(); ++it)
+	{
+		std::cout << *it << " ";
+	}
+	std::cout << std::endl;
+	auto intersect_res = from(b).intersect_with(from(a));
+	std::cout << "intersect_res" << std::endl;
+	for (auto it = intersect_res.begin(); it != intersect_res.end(); ++it)
+	{
+		std::cout << *it << " ";
+	}
+	std::cout << std::endl;
+}
+
 int main()
 {
 	run_test(test1);
 	run_test(test2);
+	run_test(test3);
 	return 0;
 }
