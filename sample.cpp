@@ -69,9 +69,18 @@ void test3()
 		std::cout << *it << " ";
 	}
 	std::cout << std::endl;
+
 	auto intersect_res = from(b).intersect_with(from(a));
 	std::cout << "intersect_res" << std::endl;
 	for (auto it = intersect_res.begin(); it != intersect_res.end(); ++it)
+	{
+		std::cout << *it << " ";
+	}
+	std::cout << std::endl;
+
+	auto concat_res = from(b).concat(from(a));
+	std::cout << "concat" << std::endl;
+	for (auto it = concat_res.begin(); it != concat_res.end(); ++it)
 	{
 		std::cout << *it << " ";
 	}

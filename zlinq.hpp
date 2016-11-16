@@ -276,6 +276,16 @@ public:
 		}
 		return range(list);
 	}
+
+	range<ElementType> concat(const range<ElementType>& val) const
+	{
+		std::list<ElementType> list(begin(), end());
+		for (auto it = val.begin(); it != val.end(); ++it)
+		{
+			list.push_back(*it);
+		}
+		return range(list);
+	}
 };
 
 template<typename Container>
