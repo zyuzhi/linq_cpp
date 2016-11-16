@@ -85,6 +85,14 @@ void test3()
 		std::cout << *it << " ";
 	}
 	std::cout << std::endl;
+
+	std::cout << "union_with" << std::endl;
+	auto union_with = from(b).union_with(from(a));
+	for (auto it = union_with.begin(); it != union_with.end(); ++it)
+	{
+		std::cout << *it << " ";
+	}
+	std::cout << std::endl;
 }
 
 int main()

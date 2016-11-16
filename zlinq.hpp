@@ -286,6 +286,11 @@ public:
 		}
 		return range(list);
 	}
+
+	range<ElementType> union_with(const range<ElementType>& val) const
+	{
+		return this->concat(val).distinct();
+	}
 };
 
 template<typename Container>

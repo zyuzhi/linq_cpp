@@ -19,6 +19,7 @@ My cpp template toy of linq(c#)
 * **distinct**
 * **except_with**
 * **intersect_with**
+* **union_with**
 * **concat**
 
 ## Doc
@@ -42,4 +43,5 @@ My cpp template toy of linq(c#)
 1. distinct
 1. except_with
 1. intersect_with
+1. union_with
 1. concat
