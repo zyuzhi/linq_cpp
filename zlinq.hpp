@@ -3,14 +3,16 @@
 #include <list>
 #include <set>
 
-namespace zlinq
+namespace zyuzhi
+{
+namespace linq
 {
 
-class zlinq_exception
+class linq_exception
 {
 public:
 	std::string message;
-	zlinq_exception(const std::string& message)
+	linq_exception(const std::string& message)
 		: message(message)
 	{
 	}
@@ -24,6 +26,17 @@ template <typename ClassType, typename ReturnType, typename Arg1>
 struct function_traits<ReturnType(ClassType::*)(Arg1) const>
 {
     typedef ReturnType result_type;
+    typedef ClassType class_type;
+    typedef Arg1 arg1_type;
+};
+
+template <typename ClassType, typename ReturnType, typename Arg1, typename Arg2>
+struct function_traits<ReturnType(ClassType::*)(Arg1, Arg2) const>
+{
+    typedef ReturnType result_type;
+    typedef ClassType class_type;
+    typedef Arg1 arg1_type;
+    typedef Arg2 arg2_type;
 };
 
 template <typename T, template<typename E, typename Allocator=std::allocator<E> > class _Container=std::list>
@@ -97,6 +110,23 @@ public:
 		}
 		return range<result_type>(res);
 	}
+
+    template<typename Function>
+    typename function_traits<Function>::result_type aggregate(const Function& func) const
+    {
+		typedef typename function_traits<Function>::result_type result_type;
+        result_type value;
+        auto it = data.begin();
+        auto first = *it;
+        ++it;
+        auto second = *it;
+        ++it;
+		for (; it != data.end(); ++it)
+		{
+			value = func(*it, value);
+		}
+		return value;
+    }
 
 	template<typename Function>
 	bool all(const Function& func) const
@@ -206,7 +236,7 @@ public:
 
 	ElementType first() const
 	{
-		if (empty()) throw zlinq_exception("Failed to get a value from an empty collection.");
+		if (empty()) throw linq_exception("Failed to get a value from an empty collection.");
 		return *begin();
 	}
 
@@ -217,7 +247,7 @@ public:
 
 	ElementType last() const
 	{
-		if (empty()) throw zlinq_exception("Failed to get a value from an empty collection.");
+		if (empty()) throw linq_exception("Failed to get a value from an empty collection.");
 		auto it = end();
 		--it;
 		return *it;
@@ -311,5 +341,6 @@ template<typename Type, size_t Size>
 range<Type> from(Type (&arr)[Size])
 {
 	return range<Type>(arr, arr + Size);
+}
 }
 }

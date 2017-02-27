@@ -3,7 +3,7 @@
 #include <string>
 #include <iostream>
 
-using namespace zlinq;
+using namespace zyuzhi::linq;
 
 template<typename Function>
 void run_test(const Function& func)
@@ -95,10 +95,18 @@ void test3()
 	std::cout << std::endl;
 }
 
+void test4()
+{
+	int b[] = {10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
+    auto min = from(b).aggregate([](int a, int b) { return a > b ? b : a; });
+    std::cout << min << std::endl;
+}
+
 int main()
 {
 	run_test(test1);
 	run_test(test2);
 	run_test(test3);
+	run_test(test4);
 	return 0;
 }
